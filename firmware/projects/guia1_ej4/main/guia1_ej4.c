@@ -1,10 +1,10 @@
-/*! @mainpage Template
+/*! @mainpage Guia 1 - Ejercicio 4
  *
  * @section genDesc General Description
  *
- * This section describes how the program works.
+ * Programa que recibe un número y lo convierte en BCD, agregando cada dígito dentro de un arreglo.
  *
- * <a href="https://drive.google.com/...">Operation Example</a>
+ * 
  *
  * @section hardConn Hardware Connection
  *

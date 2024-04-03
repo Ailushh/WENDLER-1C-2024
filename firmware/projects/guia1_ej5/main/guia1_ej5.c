@@ -1,25 +1,28 @@
-/*! @mainpage Template
+/*! @mainpage Guia 1 - Ejercicio 5
  *
  * @section genDesc General Description
  *
- * This section describes how the program works.
+ * Programa que muestra un dígito por un display LCD.
  *
- * <a href="https://drive.google.com/...">Operation Example</a>
+ * 
  *
  * @section hardConn Hardware Connection
  *
  * |    Peripheral  |   ESP32   	|
  * |:--------------:|:--------------|
- * | 	PIN_X	 	| 	GPIO_X		|
+ * | 	BCD INPUT	| 	GPIO_20		|
+ * |				|	GPIO_21		|
+ * |				|	GPIO_22		|
+ * |				|	GPIO_23		|
  *
  *
  * @section changelog Changelog
  *
  * |   Date	    | Description                                    |
  * |:----------:|:-----------------------------------------------|
- * | 12/09/2023 | Document creation		                         |
+ * | 21/03/2024 | Document creation		                         |
  *
- * @author Albano Peñalva (albano.penalva@uner.edu.ar)
+ * @author Tatiana Ailen Wendler (ailuwendler@gmail.com)
  *
  */
 

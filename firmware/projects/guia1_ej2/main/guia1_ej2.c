@@ -1,10 +1,11 @@
-/*! @mainpage Template
+/*! @mainpage Guia 1 - Ejercicio 2
  *
  * @section genDesc General Description
  *
- * This section describes how the program works.
+ * El programa hace titilar los leds 1 y 2 al mantener presionada las teclas 1 y 2 correspondientemente y hace
+ * titilar el led 3 al presionar simultáneamente las teclas 1 y 2.
  *
- * <a href="https://drive.google.com/...">Operation Example</a>
+ * 
  *
  * @section hardConn Hardware Connection
  *
@@ -17,9 +18,9 @@
  *
  * |   Date	    | Description                                    |
  * |:----------:|:-----------------------------------------------|
- * | 12/09/2023 | Document creation		                         |
+ * | 07/03/2024 | Document creation		                         |
  *
- * @author Albano Peñalva (albano.penalva@uner.edu.ar)
+ * @author Tatiana Ailen Wendler (ailuwendler@gmail.com)
  *
  */
 

@@ -1,10 +1,11 @@
-/*! @mainpage Template
+/*! @mainpage Guia 1 - Ejercicio 3
  *
  * @section genDesc General Description
  *
- * This section describes how the program works.
+ * Programa que apaga, enciende o hace titilar un led en específico. De acuerdo al modo elegido
+ * y led elegido.
  *
- * <a href="https://drive.google.com/...">Operation Example</a>
+ * 
  *
  * @section hardConn Hardware Connection
  *
@@ -17,9 +18,9 @@
  *
  * |   Date	    | Description                                    |
  * |:----------:|:-----------------------------------------------|
- * | 12/09/2023 | Document creation		                         |
+ * | 14/03/2024 | Document creation		                         |
  *
- * @author Albano Peñalva (albano.penalva@uner.edu.ar)
+ * @author Tatiana Ailen Wendler (ailuwendler@gmail.com)
  *
  */
 
