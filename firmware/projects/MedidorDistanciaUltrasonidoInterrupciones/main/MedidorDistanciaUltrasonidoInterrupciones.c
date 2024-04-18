@@ -2,15 +2,22 @@
  *
  * @section genDesc General Description
  *
- * This section describes how the program works.
- *
+ * El programa permite medir la distancia a través de un sensor de ultrasonido HC-SR04 y mostrarla por pantalla en cm. 
+ * Con el switch 1 se inicia/detiene la medición, utilizando interrupciones de teclas.
+ * Los leds se irán encendiendo/apagando a medida que aumenta/disminuye la distancia medida.
+ * Con el switch 2 se congela la medida actual en el LCD, utilizando interrupciones de teclas.
+ * La medición, encendido/apagado de leds y mostrar por el LCD se realiza cada 500ms a través de un timer.
  * 
  *
  * @section hardConn Hardware Connection
  *
  * |    Peripheral  |   ESP32   	|
  * |:--------------:|:--------------|
- * | 	PIN_X	 	| 	GPIO_X		|
+ * | 	LCD 	 	| 	GPIO_19     |
+ * |				|	GPIO_18		|
+ * |				|	GPIO_9		|
+ * |	HC-SR04		|	GPIO_03		|
+ * |				|	GPIO_02		|
  *
  *
  * @section changelog Changelog
@@ -18,6 +25,7 @@
  * |   Date	    | Description                                    |
  * |:----------:|:-----------------------------------------------|
  * | 11/04/2024 | Creación del Documento		                 |
+ * | 18/04/2024	| Finalización del Documento y Documentación	 |
  *
  * @author Wendler Tatiana Ailen (ailuwendler@gmail.com)
  *
@@ -35,10 +43,7 @@
 #include <lcditse0803.h>
 #include <timer_mcu.h>
 /*==================[macros and definitions]=================================*/
-#define CONFIG_MEASURE_PERIOD 1000
-#define CONFIG_LED_PERIOD 1000
-#define CONFIG_LCD_PERIOD 1000
-#define CONFIG_SWITCH_PERIOD 200
+#define CONFIG_MEASURE_PERIOD 500000
 /*==================[internal data definition]===============================*/
 bool medir_distancia = false;
 bool hold_medicion = false;
@@ -46,8 +51,12 @@ uint16_t distancia = 0;
 TaskHandle_t MedirDistancia_task_handle = NULL;
 TaskHandle_t EncenderLedsSegunDistancia_task_handle = NULL;
 TaskHandle_t MostrarDistanciaLCD_task_handle = NULL;
-TaskHandle_t LeerSwitches_task_handle = NULL;
 /*==================[internal functions declaration]=========================*/
+
+/**
+ * @brief Función invocada en la interrupción del timer A. Envía una notificación a las tareas
+ * de MedirDistancia, MostrarDistanciaLCD y EncenderLedsSegunDistancia para que se ejecuten.
+*/
 
 void FuncTimerA(void* param){
 
@@ -56,18 +65,29 @@ void FuncTimerA(void* param){
 	vTaskNotifyGiveFromISR(EncenderLedsSegunDistancia_task_handle, pdFALSE);   
 }
 
+/**
+ * @brief Función que permite medir la distancia en cm, detectada por el sensor.
+*/
+
 static void MedirDistancia (void *pvParameter){
+
+	while (true){
 
 	ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 
 	if (medir_distancia){
 
-	distancia = HcSr04ReadDistanceInCentimeters();}
+	distancia = HcSr04ReadDistanceInCentimeters();}}
 
 }
 
+/**
+ * @brief Función que permite encender/apagar los distintos leds de acuerdo a la distancia medida.
+*/
+
 static void EncenderLedsSegunDistancia (void *pvParameter){
 
+	while(true){
 	ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 
 	if (medir_distancia){
@@ -102,10 +122,14 @@ static void EncenderLedsSegunDistancia (void *pvParameter){
 			LedOff(LED_3);
 		}
 
-}
+}}
+
+/**
+ * @brief Función que permite mostrar la distancia medida en cm por el LCD.
+*/
 
 void static MostrarDistanciaLCD (void *pvParameter){
-
+	while(true){
 	ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 
 	if(medir_distancia){
@@ -119,10 +143,15 @@ void static MostrarDistanciaLCD (void *pvParameter){
 		LcdItsE0803Write(0);
 	}
 
-}
+}}
+
+/**
+ * @brief Función que se activa en las interrupciones de los switches, modificando el estado de las variables de control.
+*/
 
 void static LeerSwitches (void *pvParameter){
 
+	
 	bool *banderas = (bool*) pvParameter;
 
 	*banderas = !*banderas;
@@ -148,6 +177,10 @@ void app_main(void){
     };
 
     TimerInit(&timer_tareas);
+	xTaskCreate(&MedirDistancia, "Medir_Distancia", 512, NULL, 5, &MedirDistancia_task_handle);
+	xTaskCreate(&EncenderLedsSegunDistancia, "Encender/Apagar_Leds", 512, NULL, 5, &EncenderLedsSegunDistancia_task_handle);
+	xTaskCreate(&MostrarDistanciaLCD, "Mostrar_distancia_por_LCD", 512, NULL, 5, &MostrarDistanciaLCD_task_handle);
+	TimerStart(timer_tareas.timer);
 
 
 }
