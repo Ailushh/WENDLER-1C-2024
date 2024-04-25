@@ -20,7 +20,8 @@
  *
  * |   Date	    | Description                                    |
  * |:----------:|:-----------------------------------------------|
- * | 18/04/2024 | Creación del Document                          |
+ * | 18/04/2024 | Creación del Documento                         |
+ * | 25/04/2024 | Finalización y Documentación					 |
  *
  * @author Tatiana Ailen Wendler (ailuwendler@gmail.com)
  *
@@ -44,10 +45,10 @@
 bool medir_distancia = false;
 bool hold_medicion = false;
 uint16_t distancia = 0;
+uint16_t distancia_hold = 0;
 TaskHandle_t MedirDistancia_task_handle = NULL;
 TaskHandle_t EncenderLedsSegunDistancia_task_handle = NULL;
 TaskHandle_t MostrarDistanciaLCD_task_handle = NULL;
-TaskHandle_t PuertoSerie_task_handle = NULL;
 /*==================[internal functions declaration]=========================*/
 
 void FuncTimerA(void* param){
@@ -64,7 +65,8 @@ static void MedirDistancia (void *pvParameter){
 
 	if (medir_distancia){
 
-	distancia = HcSr04ReadDistanceInCentimeters();}}
+	distancia = HcSr04ReadDistanceInCentimeters();
+	}}
 
 }
 
@@ -119,6 +121,13 @@ void static MostrarDistanciaLCD (void *pvParameter){
 			LcdItsE0803Write(distancia);
 			UartSendString(UART_PC, (char *)UartItoa(distancia, 10));
 			UartSendString(UART_PC, " cm ");
+			UartSendString(UART_PC, "\r\n" );
+			distancia_hold = distancia;
+			
+	}	else{
+			UartSendString(UART_PC, (char *)UartItoa(distancia_hold, 10));
+			UartSendString(UART_PC, " cm ");
+			UartSendString(UART_PC, "\r\n" );
 	}}
 
 	else{ 
@@ -136,11 +145,21 @@ void static LeerSwitches (void *pvParameter){
 
 }
 
-//void static PuertoSerie (void *pvParameter){
+void LeerPuertoSerie (void *pvParameter){
 
-	//uint8_t lectura = UartReadByte();
-	
-//}
+	uint8_t lectura; 
+	UartReadByte(UART_PC, &lectura);
+
+	if (lectura == 'O'){
+		medir_distancia = !medir_distancia;
+		hold_medicion = false;
+	}
+
+	else if (lectura == 'H'){
+		hold_medicion = !hold_medicion;
+	}
+
+}
  
 /*==================[external functions definition]==========================*/
 void app_main(void){
@@ -153,7 +172,7 @@ void app_main(void){
 	serial_config_t serial_pc ={
 		.port = UART_PC,
 		.baud_rate = 115200,
-		.func_p = NULL,
+		.func_p = LeerPuertoSerie,
 		.param_p = NULL,
 	};
 
