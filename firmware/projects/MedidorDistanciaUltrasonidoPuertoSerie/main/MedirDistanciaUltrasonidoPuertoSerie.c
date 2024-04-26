@@ -2,8 +2,11 @@
  *
  * @section genDesc General Description
  *
- * This section describes how the program works.
- *
+ * El programa permite medir la distancia a través de un sensor de ultrasonido HC-SR04 y mostrarla por un LCD y el Serial Monitor en cm. 
+ * Con el switch 1 o la tecla "O" a través del Serial Monitor se inicia/detiene la medición.
+ * Los leds se irán encendiendo/apagando a medida que aumenta/disminuye la distancia medida.
+ * Con el switch 2 o la tecla "H" a través del Serial Monitor se holdea la medida actual.
+ * 
  *
  * @section hardConn Hardware Connection
  *
@@ -22,6 +25,7 @@
  * |:----------:|:-----------------------------------------------|
  * | 18/04/2024 | Creación del Documento                         |
  * | 25/04/2024 | Finalización y Documentación					 |
+ * | 26/04/2024 | Coreccion Documentacion						 |
  *
  * @author Tatiana Ailen Wendler (ailuwendler@gmail.com)
  *
@@ -51,6 +55,10 @@ TaskHandle_t EncenderLedsSegunDistancia_task_handle = NULL;
 TaskHandle_t MostrarDistanciaLCD_task_handle = NULL;
 /*==================[internal functions declaration]=========================*/
 
+/**
+ * @brief Función invocada en la interrupción del timer A. Envía una notificación a las tareas
+ * de MedirDistancia, MostrarDistanciaLCD y EncenderLedsSegunDistancia para que se ejecuten.
+*/
 void FuncTimerA(void* param){
 
     vTaskNotifyGiveFromISR(MedirDistancia_task_handle, pdFALSE);
@@ -58,6 +66,9 @@ void FuncTimerA(void* param){
 	vTaskNotifyGiveFromISR(EncenderLedsSegunDistancia_task_handle, pdFALSE);   
 }
 
+/**
+ * @brief Función que permite medir la distancia en cm, detectada por el sensor.
+*/
 static void MedirDistancia (void *pvParameter){
 
 	while (true){
@@ -69,6 +80,10 @@ static void MedirDistancia (void *pvParameter){
 	}}
 
 }
+
+/**
+ * @brief Función que permite encender/apagar los distintos leds de acuerdo a la distancia medida.
+*/
 
 static void EncenderLedsSegunDistancia (void *pvParameter){
 
@@ -109,6 +124,10 @@ static void EncenderLedsSegunDistancia (void *pvParameter){
 
 }}
 
+/**
+ * @brief Función que permite mostrar la distancia medida en cm por el LCD y el Serial Monitor.
+*/
+
 void static MostrarDistanciaLCD (void *pvParameter){
 	while(true){
 
@@ -136,6 +155,10 @@ void static MostrarDistanciaLCD (void *pvParameter){
 
 }}
 
+/**
+ * @brief Función que se activa en las interrupciones de los switches, modificando el estado de las variables de control.
+*/
+
 void static LeerSwitches (void *pvParameter){
 
 	
@@ -145,6 +168,10 @@ void static LeerSwitches (void *pvParameter){
 
 }
 
+/**
+ * @brief Funcion que permite leer las teclas ingresadas a través del Serial Monitor. Con la tecla "O" se enciende/activa
+ * la medicion y con la tecla "H" se holdea la medicion actual.
+*/
 void LeerPuertoSerie (void *pvParameter){
 
 	uint8_t lectura; 
