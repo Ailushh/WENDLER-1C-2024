@@ -2,15 +2,13 @@
  *
  * @section genDesc General Description
  *
- * 
- *
- *
+ * Programa que permite leer una señal analógica y convertirla a digital y viceversa. 
  *
  * @section hardConn Hardware Connection
  *
  * |    Peripheral  |   ESP32   	|
  * |:--------------:|:--------------|
- * | 	PIN_X	 	| 	GPIO_X		|
+ * | 	CH1 	 	| 	GPIO1		|
  *
  *
  * @section changelog Changelog
@@ -18,6 +16,7 @@
  * |   Date	    | Description                                    |
  * |:----------:|:-----------------------------------------------|
  * | 25/04/2024 | Creación del Documento                         |
+ * | 02/05/2024 | Finalizacion y Documentacion					 |
  *
  * @author Tatiana Ailen Wendler (ailuwendler@gmail.com)
  *
@@ -34,16 +33,34 @@
 #include <analog_io_mcu.h>
 #include <switch.h>
 /*==================[macros and definitions]=================================*/
+
+/** @def CONFIG_MEASURE_PERIOD
+ *  @brief Periodo en microsegundos que se utiliza para el timer que controla la conversion de analógico
+ * a digital. Se calcula considerando la frecuencia de muestreo.
+*/
 #define CONFIG_MEASURE_PERIOD 2000
+
+/** @def BUFFER_SIZE
+ * @brief Tamanio del buffer que posee los datos del ecg.
+*/
 #define BUFFER_SIZE 231
-//#define CONFIG_ECG_FREQUENCY 4329
+
 /*==================[internal data definition]===============================*/
 TaskHandle_t ConvertirADigital_task_handle = NULL;
 TaskHandle_t ConvertirAAnalogico_task_handle = NULL;
-TaskHandle_t ActualizarTimer_task_handle = NULL;
 int indice = 0;
+
+/**
+ * @brief Periodo en microsegundos que utiliza el timer que controla la conversion de digital a analógico.
+ */
 int ECG_FREQUENCY = 4329;
+
 bool actualizar_ecg = false;
+
+/**
+ * @brief Arreglo que contiene los datos del ecg.
+ */
+
 const char ecg[BUFFER_SIZE] = {
     76, 77, 78, 77, 79, 86, 81, 76, 84, 93, 85, 80,
     89, 95, 89, 85, 93, 98, 94, 88, 98, 105, 96, 91,
@@ -64,6 +81,9 @@ const char ecg[BUFFER_SIZE] = {
     74, 67, 71, 78, 72, 67, 73, 81, 77, 71, 75, 84, 79, 77, 77, 76, 76,
 };
 
+/**
+ * @brief Timer que coordina la conversion digital a analogico del ecg.
+ */
 timer_config_t timer_ecg = {
     	.timer = TIMER_B,
         .period = 0,
@@ -73,16 +93,25 @@ timer_config_t timer_ecg = {
 
 /*==================[internal functions declaration]=========================*/
 
+/**
+ * @brief Funcion que se ejecuta en cada interrupcion del timer encargado de llamar a la conversion analogica-digital.
+ */
 void FuncTimerA(void* param){
 
-    vTaskNotifyGiveFromISR(ConvertirADigital_task_handle, pdFALSE);
-	vTaskNotifyGiveFromISR(ActualizarTimer_task_handle, pdFALSE);   
+    vTaskNotifyGiveFromISR(ConvertirADigital_task_handle, pdFALSE);   
 }
 
+/**
+ * @brief Funcion que se ejecuta en cada interrupcion del timer encargado de llamar a la conversion digital-analogica del ecg.
+ */
 void FuncTimerB(void* param){
 
     vTaskNotifyGiveFromISR(ConvertirAAnalogico_task_handle, pdFALSE);   
 }
+
+/**
+ * @brief Funcion que permite leer una entrada analógica y convertirla a Digital. 
+*/
 
 static void ConvertirADigital(void *param){
 	while (true){
@@ -93,6 +122,10 @@ static void ConvertirADigital(void *param){
 	UartSendString(UART_PC, (char *)UartItoa(lectura, 10));
 	UartSendString(UART_PC, "\r" );
 }}
+
+/**
+ * @brief Funcion que permite convertir la señal digital de ecg a analógica.
+ */
 
 static void ConvertirAAnalogico(void *param){
 
@@ -111,6 +144,10 @@ static void ConvertirAAnalogico(void *param){
 	indice++;
 }}
 
+/**
+ * @brief Funcion de interrupcion de los switches. Al presionar el switch 1 se aumenta la frecuencia del muestro del ecg.
+ * Con el switch 2 se disminuye la frecuencia del ecg. 
+ */
 void static LeerSwitches (void *pvParameter){
 
 	int tecla;
@@ -121,25 +158,19 @@ void static LeerSwitches (void *pvParameter){
 	{
 	case SWITCH_1:
 		ECG_FREQUENCY = ECG_FREQUENCY - 100;
-		ActualizarTimer();
+		timer_ecg.period = ECG_FREQUENCY;
+		TimerInit(&timer_ecg);
+		TimerStart(timer_ecg.timer);
 		break;
 	
 	case SWITCH_2:
 		ECG_FREQUENCY = ECG_FREQUENCY + 100;
-		ActualizarTimer();
+		timer_ecg.period = ECG_FREQUENCY;
+		TimerInit(&timer_ecg);
+		TimerStart(timer_ecg.timer);
 		break;
 	}
 }
-static void ActualizarTimer(void *pvParameter){
-
-	while (true){
-		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-
-		if(actualizar_ecg){
-		timer_ecg.period = ECG_FREQUENCY;
-		TimerInit(&timer_ecg);
-		TimerStart(timer_ecg.timer);}
-}}
 
 
 /*==================[external functions definition]==========================*/
@@ -181,7 +212,6 @@ void app_main(void){
 	TimerInit(&timer_ecg);
 	xTaskCreate(&ConvertirADigital, "Convertir señal a Digital", 512, NULL, 5, &ConvertirADigital_task_handle);
 	xTaskCreate(&ConvertirAAnalogico, "Convertir señal a Analogica", 512, NULL, 5, &ConvertirAAnalogico_task_handle);
-	xTaskCreate(&ActualizarTimer, "Tarea que actualiza timer segun swtiches", 512, NULL, 5, &ActualizarTimer_task_handle);
 	TimerStart(timer_medicion.timer);
 	TimerStart(timer_ecg.timer);
 	
