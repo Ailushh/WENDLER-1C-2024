@@ -41,6 +41,9 @@
         },
         {
             "path": "projects/Osciloscopio"
+        },
+        {
+            "path": "middelware"
         }
     ],
     "settings": {
