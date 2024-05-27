@@ -44,6 +44,9 @@
         },
         {
             "path": "middelware"
+        },
+        {
+            "path": "projects/proyecto_integrador"
         }
     ],
     "settings": {
