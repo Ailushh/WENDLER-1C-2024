@@ -40,7 +40,7 @@
  * @return true 
  * @return false 
  */
-bool lm35cInit(gpio_t pin);
+bool lm35cInit(adc_ch_t canal);
 
 float lm35cMeasureTemperature(void);
 

@@ -13,7 +13,7 @@
 #include "lm35c.h"
 #include "gpio_mcu.h"
 /*==================[macros and definitions]=================================*/
-#define V_REF 5                /**< Tensión de referencia*/
+#define V_REF 3.3                /**< Tensión de referencia*/
 #define TOTAL_BITS 1024          /**< Cantidad total de bits*/
 /*==================[internal data declaration]==============================*/
 analog_input_config_t temp_config;
@@ -26,10 +26,10 @@ analog_input_config_t temp_config;
 /*==================[internal functions definition]==========================*/
 
 /*==================[external functions definition]==========================*/
-bool lm35cInit(gpio_t pin){
+bool lm35cInit(adc_ch_t canal){
 	
 
-	temp_config.input = pin;
+	temp_config.input = canal;
 	temp_config.mode = ADC_SINGLE;
 
 	AnalogInputInit(&temp_config);  
@@ -40,12 +40,10 @@ bool lm35cInit(gpio_t pin){
 float lm35cMeasureTemperature(void){
 
 	uint16_t value;
-	float temperature = 0;
-	float valor = 0;
+	uint16_t temperature = 0;
 	
 	AnalogInputReadSingle(temp_config.input, &value);
-	valor = (value/1000.0)/V_REF;
-	temperature = valor/10;
+	temperature = value/10;
 	
 	return temperature;
 }
