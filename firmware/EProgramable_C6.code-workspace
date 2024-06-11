@@ -106,7 +106,8 @@
             "mpu6050.h": "c",
             "i2c_mcu.h": "c",
             "stdio.h": "c",
-            "time.h": "c"
+            "time.h": "c",
+            "compare": "c"
         },
     },
     "tasks": {
