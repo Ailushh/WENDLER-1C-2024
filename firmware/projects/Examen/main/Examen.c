@@ -38,37 +38,106 @@
 #include "uart_mcu.h"
 #include "switch.h"
 /*==================[macros and definitions]=================================*/
-#define CONFIG_MEASURE_PERIOD 500000
+#define CONFIG_MEASURE_PERIOD 3000000
+#define CONFIG_CONTROL_PERIOD 5000000
 #define GPIO_RIEGO GPIO_22
 #define GPIO_AGUA GPIO_21
 #define GPIO_PHA GPIO_20
 #define GPIO_PHB GPIO_19
+TaskHandle_t ControlarBombas_task_handle = NULL;
+TaskHandle_t Medir_task_handle = NULL;
+TaskHandle_t Mostrar_task_handle = NULL;
 /*==================[internal data definition]===============================*/
 bool iniciar = false;
-bool detener = false;
-uint16_t pH = 0;
+float pH = 0;
+bool agua = false;
+bool phA = false;
+bool phB = false;
 /*==================[internal functions declaration]=========================*/
+
+void FuncTimerA(void* param){
+
+    vTaskNotifyGiveFromISR(Medir_task_handle, pdFALSE);   
+	vTaskNotifyGiveFromISR(ControlarBombas_task_handle, pdFALSE);   
+}
+
+void FuncTimerB(void* param){
+
+    vTaskNotifyGiveFromISR(Mostrar_task_handle, pdFALSE); 
+}
+
 static void ControlarBombas(void *param){
 	while (true){
 	ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-}}
 
-static void MedirpH(void *param){
+	if(iniciar){
+		if(agua){ 
+			GPIOOn(GPIO_AGUA);
+
+			UartSendString(UART_PC, " Bomba de Agua Encendida ");
+			UartSendString(UART_PC, "\r\n" );
+		}
+
+		else{
+			GPIOOff(GPIO_AGUA);
+		}
+
+		if(pH<6){
+			GPIOOn(GPIO_PHB);
+			UartSendString(UART_PC, " Bomba de pHB Encendida ");
+			UartSendString(UART_PC, "\r\n" );
+		}
+
+		if(pH>6.7){
+			GPIOOn(GPIO_PHA);
+			UartSendString(UART_PC, " Bomba de pHA Encendida ");
+			UartSendString(UART_PC, "\r\n" );
+		}
+	}}
+}
+
+static void Medir(void *param){
 	while (true){
 	ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 
+	if (iniciar){
 	uint16_t lectura;
-	AnalogInputReadSingle(CH1, &lectura);
+	AnalogInputReadSingle(CH1, &lectura); //La función AnalogInputReadSingle ya me devuelve el valor leído en mV
+	pH = (lectura*14)/3000; //Sabiendo que para 0V tengo un pH igual a 0, y que para 3000mV (3V) tengo un pH igual a 14
+
+	//Como el pH es un valor flotante, debo transforma a ASCII el número antes y después de la coma
 	UartSendString(UART_PC, (char *)UartItoa(lectura, 10));
 	UartSendString(UART_PC, "\r" );
-}}
+
+	agua = GPIORead(GPIO_RIEGO); //Leo si el sensor me indica si debo regar o no
+
+}}}
+
+static void Mostrar(void *param){
+	while (true){
+	ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+
+	if (iniciar){
+	
+
+}}}
 
 void static LeerSwitches (void *pvParameter){
 
-	
-	bool *banderas = (bool*) pvParameter;
+	int tecla;
 
-	*banderas = !*banderas;
+	tecla = SwitchesRead();
+
+	switch (tecla)
+	{
+	case SWITCH_1:
+		iniciar = true;
+		break;
+	
+	case SWITCH_2:
+		iniciar = false;
+		break;
+	}
 
 }
 
@@ -98,8 +167,29 @@ void app_main(void){
 
 	UartInit(&serial_pc);
 
-	SwitchActivInt(SWITCH_1, LeerSwitches, &iniciar);
-	SwitchActivInt(SWITCH_2, LeerSwitches, &detener);
+	SwitchActivInt(SWITCH_1, LeerSwitches, NULL);
+	SwitchActivInt(SWITCH_2, LeerSwitches, NULL);
+
+	timer_config_t timer_medicion = {
+    	.timer = TIMER_A,
+        .period = CONFIG_MEASURE_PERIOD,
+        .func_p = FuncTimerA,
+        .param_p = NULL
+    };
+
+	timer_config_t timer_control = {
+    	.timer = TIMER_B,
+        .period = CONFIG_CONTROL_PERIOD,
+        .func_p = FuncTimerB,
+        .param_p = NULL
+    };
+
+	TimerInit(&timer_medicion);
+	TimerInit(&timer_control);
+	xTaskCreate(&Medir, "Sensar el pH y si se necesita regar o no", 512, NULL, 5, &Medir_task_handle);
+	xTaskCreate(&ControlaryMostrar, "Enciende/apaga las bombas según se necesite y muestra a través de la UART si las mismas están encendidas y el nivel de pH medido", 512, NULL, 5, &ControlaryMostrar_task_handle);
+	TimerStart(timer_medicion.timer);
+	TimerStart(timer_control.timer);
 
 }
 /*==================[end of file]============================================*/
