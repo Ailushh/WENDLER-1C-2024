@@ -83,7 +83,7 @@ void ControlLeds(struct leds *ptr_led) { //Utilizo punteros para, por ejemplo, a
 			else {
 					LedToggle(LED3); }
 			for (int j=0; j<ptr_led->periodo; j++){
-					vTaskDelay( RETARDO / portTICK_PERIOD_MS);}	
+					vTaskDelay(RETARDO / portTICK_PERIOD_MS);}	
 					}
 		break;
 	}}
