@@ -11,7 +11,6 @@
  * |	RELÉ LÁMPARA UV	 |	 GPIO_22			|
  * |	RELÉ PC			 |	 GPIO_21			|
  * |	ARDUINO NANO	 |	 GPIO_20			|
- * |	MICRO SERVO		 |   GPIO_19			|	
  *
  *
  * @section changelog Changelog
@@ -19,7 +18,7 @@
  * |   Date	    | 						Description                             |
  * |:----------:|:--------------------------------------------------------------|
  * | 16/05/2024 | Creación del Documento                         				|
- * | 30/05/2024	| Se comprueba correcto funcionamiento del sensor de temperatura|
+ * | 19/06/2024	| Finalización. Se comprueba correcto funcionamiento del mismo	|
  *
  * @author Wendler Tatiana Ailen (ailuwendler@gmail.com)
  *
@@ -40,8 +39,8 @@
 #include "servo_sg90.h"
 /*==================[macros and definitions]=================================*/
 
-#define CONFIG_MEASURE_PERIOD 30000
-#define CONFIG_CONTROL_PERIOD 60000
+#define CONFIG_MEASURE_PERIOD 10000
+#define CONFIG_CONTROL_PERIOD 10000
 #define CONFIG_AIR_PERIOD	120000
 #define GPIO_PC GPIO_22
 #define GPIO_UV GPIO_21
@@ -51,7 +50,6 @@
 /*==================[internal data definition]===============================*/
 
 uint16_t temperature = 0;
-uint16_t temperature_prom = 0;
 bool UV = true;
 bool PC = true;
 bool AIR = false;
@@ -63,10 +61,13 @@ int minutes_start;
 int hours_end;
 int minutes_end;
 char day[3];
-uint16_t temperature_buffer[120];
 uint16_t temperature_max = 0;
 uint16_t temperature_min = 1000;
-int contador = 0;
+float temperature_prom = 0;
+TaskHandle_t MeasureTemperature_task_handle = NULL;
+TaskHandle_t DeviceControl_task_handle = NULL;
+TaskHandle_t IRControl_task_handle = NULL;
+TaskHandle_t ReadTime_task_handle = NULL;
 
 /*==================[internal functions declaration]=========================*/
 
@@ -79,45 +80,50 @@ static void MeasureTemperature(){
 	UartSendString(UART_PC, " °C ");
 	UartSendString(UART_PC, "\r\n" );
 
-	temperature_buffer[contador]=temperature;
-
-	for (int i = 0; i++; i=contador){
-		temperature_prom += temperature_buffer[i];
-
-		if (temperature_buffer[i]<temperature_min){
-			temperature_min = temperature_buffer[i];
+	if (temperature>temperature_max){
+			temperature_max = temperature;
 		}
 
-		if (temperature_buffer[i]>temperature_max){
-			temperature_max = temperature_buffer[i];
+	if (temperature<temperature_min){
+			temperature_min = temperature;
 		}
-	}
 
-	temperature_prom = temperature_prom/contador+1;
+	temperature_prom = (temperature_prom+temperature)/2;
 
-	contador ++;
 
-	if(temperature_prom>23){
-		AIR = true;
-	}
-	else{
-		AIR = false;
-	}
+	UartSendString(UART_PC, "Temperatura Promedio:");
+	UartSendString(UART_PC, (char *)UartItoa(temperature_prom, 10));
+	UartSendString(UART_PC, " °C ");
+	UartSendString(UART_PC, "\r\n" );
+
+	UartSendString(UART_PC, "Temperatura Minima:");
+	UartSendString(UART_PC, (char *)UartItoa(temperature_min, 10));
+	UartSendString(UART_PC, " °C ");
+	UartSendString(UART_PC, "\r\n" );
+
+	UartSendString(UART_PC, "Temperatura Maxima:");
+	UartSendString(UART_PC, (char *)UartItoa(temperature_max, 10));
+	UartSendString(UART_PC, " °C ");
+	UartSendString(UART_PC, "\r\n" );
 
 	char msg[30];
 	sprintf(msg, "*T%u\n*", temperature); //Termómetro de temperatura actual
 	BleSendString(msg);
 	sprintf(msg, "*N%u\n*", temperature); //Temperatura actual
 	BleSendString(msg);
-	sprintf(msg, "*M%u\n*", temperature_prom); //Temperatura promedio
+	sprintf(msg, "*M%.2f\n*", temperature_prom); //Temperatura promedio
 	BleSendString(msg);
 	sprintf(msg, "*R%u\n*", temperature_max); //Temperatura maxima
 	BleSendString(msg);
 	sprintf(msg, "*L%u\n*", temperature_min); //Temperatura minima
 	BleSendString(msg);
 
-	if(contador==119){
-		contador = 0;
+	if(temperature_prom>23){
+		AIR = true;
+	}
+
+	else{
+		AIR = false;
 	}
 
 	vTaskDelay(CONFIG_MEASURE_PERIOD / portTICK_PERIOD_MS);
@@ -129,13 +135,13 @@ static void DeviceControl(){
 	if (now==false && today==true){
 	if (UV){
 		GPIOOn(GPIO_UV);
-		UartSendString(UART_PC, "Lampara UV Encendida");
+		UartSendString(UART_PC, "Lampara UV Apagada");
 		UartSendString(UART_PC, "\r\n" );
 	}
 
 	else{
 		GPIOOff(GPIO_UV);
-		UartSendString(UART_PC, "Lampara UV Apagada");
+		UartSendString(UART_PC, "Lampara UV Encendida");
 		UartSendString(UART_PC, "\r\n" );
 	}}
 
@@ -161,12 +167,10 @@ static void IRControl(){
 
 	if (AIR){
 		GPIOOn(GPIO_ARD);
-		//ServoMove(SERVO_1, 90);
 	}
 
 	else{
 		GPIOOff(GPIO_ARD);
-		//ServoMove(SERVO_1, -90);
 	}
 
 	vTaskDelay(CONFIG_AIR_PERIOD / portTICK_PERIOD_MS);
@@ -184,53 +188,59 @@ static void ReadTime(){
     hours = (local->tm_hour)-3; //Calcula la hora según el uso horario de mi sistema, debo restarle 3 para ajustarlo a la hora Argentina
     minutes = local->tm_min;
 
-	//Extraigo el día de la semana
+	//Extraigo el día de la semana en formato Sun, Mon, Tue, Wed, Thu, Fri, Sat segun corresponda
 	for (int i = 0; i<4; i++){
         day[i]= ctime(&now)[i];
     }
 
+
 	if (hours_start == hours && minutes_start == minutes){
+
 		now = true;
+
 		sprintf(msg, "*G%u\n*", 1); //Barra disponibilidad
 		BleSendString(msg);
-		sprintf(msg, "*D%u\n*", 'Ocupado'); //Mensaje disponibilidad
+		sprintf(msg, "*D%u\n*", 'Ocu'); //Mensaje disponibilidad. Consultorio Ocupado
 		BleSendString(msg);
 	}
 
 	if(hours_end == hours && minutes_end == minutes){
+
 		now = false;
+
 		sprintf(msg, "*G%u\n*", 0); //Barra disponibilidad
 		BleSendString(msg);
-		sprintf(msg, "*D%u\n*", 'Disponible'); //Mensaje disponibilidad
+		sprintf(msg, "*D%u\n*", 'Dis'); //Mensaje disponibilidad. Consultorio Disponible
 		BleSendString(msg);
 	}
 
 	if(now){
-		sprintf(msg, "*P%u\n*", hours_end); 
+		sprintf(msg, "*P%u\n*", hours_end); //Hora de finalización
 		BleSendString(msg);
-		sprintf(msg, "*Q%u\n*", minutes_end); 
+		sprintf(msg, "*Q%u\n*", minutes_end); //Minutos de finalización
 		BleSendString(msg);}
 
 	else{
-		sprintf(msg, "*F%u\n*", hours_start); 
+		sprintf(msg, "*F%u\n*", hours_start); //Hora de inicio del próximo turno
 		BleSendString(msg);
-		sprintf(msg, "*J%u\n*", minutes_start); 
+		sprintf(msg, "*J%u\n*", minutes_start); //Minutos de inicio del próximo turno
 		BleSendString(msg);
 
-		sprintf(msg, "*P%u\n*", hours_end); 
+		sprintf(msg, "*P%u\n*", hours_end); //Hora de finalización del próximo turno
 		BleSendString(msg);
-		sprintf(msg, "*Q%u\n*", minutes_end); 
+		sprintf(msg, "*Q%u\n*", minutes_end); //Minutos de finalización del próximo turno
 		BleSendString(msg);
 	}
 
 	vTaskDelay(CONFIG_MEASURE_PERIOD / portTICK_PERIOD_MS);
-
+	
 }}
 
 void ReadApp(uint8_t * data, uint8_t length){
 	
 	uint8_t i = 1;
 	
+	//Recibo los días de atención en formato Sun, Mon, Tue, Wed, Thu, Fri, Sat. Si coincide con el día actual, hoy habrá atención
 	if(data[0]==day[0] && data[1]==day[1]){
 		today=true;
 	}
@@ -274,7 +284,6 @@ void ReadApp(uint8_t * data, uint8_t length){
 			i++;
 		}
 	}
-	
 }
 
 void ReadUart(){
@@ -304,7 +313,6 @@ void app_main(void){
 	GPIOInit(GPIO_PC, GPIO_OUTPUT); //GPIO que activará el relé que encederá la Lampara UV
 	GPIOInit(GPIO_UV, GPIO_OUTPUT); //GPIO que activará el relé que encenderá la PC
 	GPIOInit(GPIO_ARD, GPIO_OUTPUT); //GPIO que activará el Arduino Nano que controla el Aire Acondicionado
-	ServoInit(SERVO_1, GPIO_SERVO);
 
 	ble_config_t ble_configuration = {
         "CONSULTORIO_1",
@@ -322,10 +330,10 @@ void app_main(void){
 
 	BleInit(&ble_configuration);
 
-	MeasureTemperature();
-	ReadTime();
-	DeviceControl();
-	IRControl();
+	xTaskCreate(&MeasureTemperature, "Medir Temperatura", 2048, NULL, 5, &MeasureTemperature_task_handle);
+	xTaskCreate(&DeviceControl, "Controla la PC y la lampara UV", 2048, NULL, 5, &DeviceControl_task_handle);
+	xTaskCreate(&IRControl, "Controla el Aire Acondicionado", 2048, NULL, 5, &IRControl_task_handle);
+	xTaskCreate(&ReadTime, "Lee el día de hoy, hora y minutos actuales", 2048, NULL, 5, &ReadTime_task_handle);
 
 	
 }
