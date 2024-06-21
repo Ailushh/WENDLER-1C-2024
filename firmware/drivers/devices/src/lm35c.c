@@ -13,8 +13,7 @@
 #include "lm35c.h"
 #include "gpio_mcu.h"
 /*==================[macros and definitions]=================================*/
-#define V_REF 3.3                /**< Tensión de referencia*/
-#define TOTAL_BITS 1024          /**< Cantidad total de bits*/
+
 /*==================[internal data declaration]==============================*/
 analog_input_config_t temp_config;
 /*==================[internal functions declaration]=========================*/

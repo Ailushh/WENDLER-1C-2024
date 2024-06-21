@@ -33,17 +33,18 @@
 
 /*==================[external functions declaration]=========================*/
 
-/**
- * @brief 
- * 
- * @param canal 
- * @return true 
- * @return false 
+/** @fn bool lm35cInit(adc_ch_t canal);
+ * @brief Initializes lmc5c driver
+ * @param[in] canal 
+ * @return TRUE if no error 
  */
 bool lm35cInit(adc_ch_t canal);
 
+/** @fn lm35cMeasureTemperature(void);
+ * @brief Measures the current temperature
+ * @return value of temperature in °C 
+ */
 float lm35cMeasureTemperature(void);
-
 
 #endif /* #ifndef LM35C_H */
 
