@@ -1,0 +1,928 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.10.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Proyecto Integrador - ConfortMed: Referencia del archivo C:/Repositorio/WENDLER-1C-2024/firmware/projects/proyecto_integrador/main/proyecto_integrador.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Proyecto Integrador - ConfortMed<span id="projectnumber">&#160;1.0</span>
+   </div>
+   <div id="projectbrief">Proyecto Integrador de Electrónica Programable - 1C 2024 - Wendler Tatiana Ailén</div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.10.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('proyecto__integrador_8c.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#define-members">defines</a> &#124;
+<a href="#func-members">Funciones</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">Referencia del archivo proyecto_integrador.c</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;stdbool.h&gt;</code><br />
+<code>#include &quot;freertos/FreeRTOS.h&quot;</code><br />
+<code>#include &quot;freertos/task.h&quot;</code><br />
+<code>#include &lt;lm35c.h&gt;</code><br />
+<code>#include &lt;uart_mcu.h&gt;</code><br />
+<code>#include &lt;analog_io_mcu.h&gt;</code><br />
+<code>#include &lt;ble_mcu.h&gt;</code><br />
+<code>#include &lt;time.h&gt;</code><br />
+</div>
+<p><a href="proyecto__integrador_8c_source.html">Ir al código fuente de este archivo.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+defines</h2></td></tr>
+<tr class="memitem:a9a265a2fa8b8a1442be25098dec84dac" id="r_a9a265a2fa8b8a1442be25098dec84dac"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9a265a2fa8b8a1442be25098dec84dac">CONFIG_MEASURE_PERIOD</a>&#160;&#160;&#160;10000</td></tr>
+<tr class="memdesc:a9a265a2fa8b8a1442be25098dec84dac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Periodo en milisegundos cada cuál se ejecutarán las tareas <a class="el" href="#a5f29c74be484769ba28c966c65466d27" title="Tarea encargada de sensar la temperatura actual y calcular la temperatura máxima, la temperatura míni...">MeasureTemperature()</a> y <a class="el" href="#a483cced19b61975f76957f5696425fe9" title="Tarea que lee el día y la hora y minutos actuales. Indica si nos encontramos en horario de atención o...">ReadTime()</a>  <br /></td></tr>
+<tr class="separator:a9a265a2fa8b8a1442be25098dec84dac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d717af3f3d77cf7bc7875d98f2ae414" id="r_a2d717af3f3d77cf7bc7875d98f2ae414"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2d717af3f3d77cf7bc7875d98f2ae414">CONFIG_CONTROL_PERIOD</a>&#160;&#160;&#160;30000</td></tr>
+<tr class="memdesc:a2d717af3f3d77cf7bc7875d98f2ae414"><td class="mdescLeft">&#160;</td><td class="mdescRight">Periodo en milisegundos cada cuál se ejecutará la tarea <a class="el" href="#aca4c29326f0ccdedb0da727baaf7bb16" title="Tarea encargada de encender/apagar la PC y la lámpara UV dependiendo de si hoy hay o no atención,...">DeviceControl()</a>  <br /></td></tr>
+<tr class="separator:a2d717af3f3d77cf7bc7875d98f2ae414"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae941d260d00394cd8fbc9fc2057ea111" id="r_ae941d260d00394cd8fbc9fc2057ea111"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae941d260d00394cd8fbc9fc2057ea111">CONFIG_AIR_PERIOD</a>&#160;&#160;&#160;120000</td></tr>
+<tr class="memdesc:ae941d260d00394cd8fbc9fc2057ea111"><td class="mdescLeft">&#160;</td><td class="mdescRight">Periodo en milisegundos cada cuál se ejecutará la tarea <a class="el" href="#a75e4bcd20cbf18091b5f480f93789eff" title="Tarea encargada de, mediante un GPIO, indicarle al arduino nano si debe emitir la señal IR para encen...">IRControl()</a>  <br /></td></tr>
+<tr class="separator:ae941d260d00394cd8fbc9fc2057ea111"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f01a704f5cade906a48b24a0c7ed5d8" id="r_a6f01a704f5cade906a48b24a0c7ed5d8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6f01a704f5cade906a48b24a0c7ed5d8">GPIO_PC</a>&#160;&#160;&#160;GPIO_22</td></tr>
+<tr class="separator:a6f01a704f5cade906a48b24a0c7ed5d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3c75a5013ca24bed70560793627d63c" id="r_ac3c75a5013ca24bed70560793627d63c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac3c75a5013ca24bed70560793627d63c">GPIO_UV</a>&#160;&#160;&#160;GPIO_21</td></tr>
+<tr class="separator:ac3c75a5013ca24bed70560793627d63c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99f808a4928b6f1e405cf5a32d40d906" id="r_a99f808a4928b6f1e405cf5a32d40d906"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a99f808a4928b6f1e405cf5a32d40d906">GPIO_ARD</a>&#160;&#160;&#160;GPIO_20</td></tr>
+<tr class="separator:a99f808a4928b6f1e405cf5a32d40d906"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d83761e75e02b526fefd2bd6664ce10" id="r_a2d83761e75e02b526fefd2bd6664ce10"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2d83761e75e02b526fefd2bd6664ce10">GPIO_SERVO</a>&#160;&#160;&#160;GPIO_19</td></tr>
+<tr class="separator:a2d83761e75e02b526fefd2bd6664ce10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Funciones</h2></td></tr>
+<tr class="memitem:a5f29c74be484769ba28c966c65466d27" id="r_a5f29c74be484769ba28c966c65466d27"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5f29c74be484769ba28c966c65466d27">MeasureTemperature</a> ()</td></tr>
+<tr class="memdesc:a5f29c74be484769ba28c966c65466d27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tarea encargada de sensar la temperatura actual y calcular la temperatura máxima, la temperatura mínima y la temperatura promedio. Envía todos los datos a través de la UART y a la aplicación bluetooth. Si la temperatura promedio es mayor a 23°C, habilita la variable de control que permite encender el Aire Acondicionado.  <br /></td></tr>
+<tr class="separator:a5f29c74be484769ba28c966c65466d27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca4c29326f0ccdedb0da727baaf7bb16" id="r_aca4c29326f0ccdedb0da727baaf7bb16"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aca4c29326f0ccdedb0da727baaf7bb16">DeviceControl</a> ()</td></tr>
+<tr class="memdesc:aca4c29326f0ccdedb0da727baaf7bb16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tarea encargada de encender/apagar la PC y la lámpara UV dependiendo de si hoy hay o no atención, y si nos encontramos en horario de atención o no. Se indica por la UART si los dispositivos se encuentran encedidos o apagados.  <br /></td></tr>
+<tr class="separator:aca4c29326f0ccdedb0da727baaf7bb16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75e4bcd20cbf18091b5f480f93789eff" id="r_a75e4bcd20cbf18091b5f480f93789eff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a75e4bcd20cbf18091b5f480f93789eff">IRControl</a> ()</td></tr>
+<tr class="memdesc:a75e4bcd20cbf18091b5f480f93789eff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tarea encargada de, mediante un GPIO, indicarle al arduino nano si debe emitir la señal IR para encender o apagar el Aire Acondicionado.  <br /></td></tr>
+<tr class="separator:a75e4bcd20cbf18091b5f480f93789eff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a483cced19b61975f76957f5696425fe9" id="r_a483cced19b61975f76957f5696425fe9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a483cced19b61975f76957f5696425fe9">ReadTime</a> ()</td></tr>
+<tr class="memdesc:a483cced19b61975f76957f5696425fe9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tarea que lee el día y la hora y minutos actuales. Indica si nos encontramos en horario de atención o no, de acuerdo a los datos ingresados en la aplicación bluetooth. Envía a la aplicación bluetooth si el consultorio actualmente se encuentra disponible o desocupado. En caso de encontrarse ocupado, también envía la hora de finalización. En caso de encontrarse disponible, envía la hora de inicio y de finalización del próximo turno.  <br /></td></tr>
+<tr class="separator:a483cced19b61975f76957f5696425fe9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6458ee3bb8b8a39eba7df8991d0fcfa" id="r_ab6458ee3bb8b8a39eba7df8991d0fcfa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab6458ee3bb8b8a39eba7df8991d0fcfa">ReadApp</a> (uint8_t *data, uint8_t length)</td></tr>
+<tr class="memdesc:ab6458ee3bb8b8a39eba7df8991d0fcfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tarea que se ejecuta al recibir datos a través de la aplicación bluetooth. Determina si hoy hay atención o no, dependiendo del día actual y los datos obtenidos.  <br /></td></tr>
+<tr class="separator:ab6458ee3bb8b8a39eba7df8991d0fcfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe5dc9fc072fc013a50a356019cbf39c" id="r_abe5dc9fc072fc013a50a356019cbf39c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abe5dc9fc072fc013a50a356019cbf39c">ReadUart</a> ()</td></tr>
+<tr class="memdesc:abe5dc9fc072fc013a50a356019cbf39c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tarea que se ejecuta al recibir caracteres a través de la UART. Se utiliza para corroborar funcionamiento de de los dispositivos.  <br /></td></tr>
+<tr class="separator:abe5dc9fc072fc013a50a356019cbf39c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a630544a7f0a2cc40d8a7fefab7e2fe70" id="r_a630544a7f0a2cc40d8a7fefab7e2fe70"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a630544a7f0a2cc40d8a7fefab7e2fe70">app_main</a> (void)</td></tr>
+<tr class="separator:a630544a7f0a2cc40d8a7fefab7e2fe70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a6bd95140398cc8f4b44157b17d6ba31e" id="r_a6bd95140398cc8f4b44157b17d6ba31e"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6bd95140398cc8f4b44157b17d6ba31e">temperature</a> = 0</td></tr>
+<tr class="memdesc:a6bd95140398cc8f4b44157b17d6ba31e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable global en la cual se almacenará la última temperatura sensada.  <br /></td></tr>
+<tr class="separator:a6bd95140398cc8f4b44157b17d6ba31e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa90d06fbaa18929644a50f4d75c19099" id="r_aa90d06fbaa18929644a50f4d75c19099"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa90d06fbaa18929644a50f4d75c19099">UV</a> = true</td></tr>
+<tr class="memdesc:aa90d06fbaa18929644a50f4d75c19099"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable de control para encender/apagar la lámpara UV.  <br /></td></tr>
+<tr class="separator:aa90d06fbaa18929644a50f4d75c19099"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a831811b81d1143c1dc1ba578c78b6cf3" id="r_a831811b81d1143c1dc1ba578c78b6cf3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a831811b81d1143c1dc1ba578c78b6cf3">PC</a> = true</td></tr>
+<tr class="memdesc:a831811b81d1143c1dc1ba578c78b6cf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable de control para encender/apagar la PC.  <br /></td></tr>
+<tr class="separator:a831811b81d1143c1dc1ba578c78b6cf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a244a83bedea6936b4e31cd272fc6ddd5" id="r_a244a83bedea6936b4e31cd272fc6ddd5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a244a83bedea6936b4e31cd272fc6ddd5">AIR</a> = false</td></tr>
+<tr class="separator:a244a83bedea6936b4e31cd272fc6ddd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9976072a934d623de95a10f1daf2d55d" id="r_a9976072a934d623de95a10f1daf2d55d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9976072a934d623de95a10f1daf2d55d">today</a> = false</td></tr>
+<tr class="memdesc:a9976072a934d623de95a10f1daf2d55d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable de control que indica si el día de hoy hay atención en el consultorio o no.  <br /></td></tr>
+<tr class="separator:a9976072a934d623de95a10f1daf2d55d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92853dc61ab5df433c749721bb895eb3" id="r_a92853dc61ab5df433c749721bb895eb3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a92853dc61ab5df433c749721bb895eb3">now</a> = false</td></tr>
+<tr class="memdesc:a92853dc61ab5df433c749721bb895eb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable de control que indica si nos encontramos en horario de atención o no.  <br /></td></tr>
+<tr class="separator:a92853dc61ab5df433c749721bb895eb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af23005df06fc3cd4264e5eee2dfa2f8c" id="r_af23005df06fc3cd4264e5eee2dfa2f8c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af23005df06fc3cd4264e5eee2dfa2f8c">hours</a></td></tr>
+<tr class="memdesc:af23005df06fc3cd4264e5eee2dfa2f8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indica la hora actual.  <br /></td></tr>
+<tr class="separator:af23005df06fc3cd4264e5eee2dfa2f8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab693b677bdc9ded12b06daf49778101c" id="r_ab693b677bdc9ded12b06daf49778101c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab693b677bdc9ded12b06daf49778101c">minutes</a></td></tr>
+<tr class="memdesc:ab693b677bdc9ded12b06daf49778101c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indica los minutos actuales de la hora actual.  <br /></td></tr>
+<tr class="separator:ab693b677bdc9ded12b06daf49778101c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fa3726035ab718609253eae0082461a" id="r_a1fa3726035ab718609253eae0082461a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1fa3726035ab718609253eae0082461a">hours_start</a></td></tr>
+<tr class="memdesc:a1fa3726035ab718609253eae0082461a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indica la hora de inicio de atención.  <br /></td></tr>
+<tr class="separator:a1fa3726035ab718609253eae0082461a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0252ac49f50936bc797372d5372d05a9" id="r_a0252ac49f50936bc797372d5372d05a9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0252ac49f50936bc797372d5372d05a9">minutes_start</a></td></tr>
+<tr class="memdesc:a0252ac49f50936bc797372d5372d05a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indica los minutos de la hora de inicio de atención.  <br /></td></tr>
+<tr class="separator:a0252ac49f50936bc797372d5372d05a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2653bf73eaa94fde23247434709061f6" id="r_a2653bf73eaa94fde23247434709061f6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2653bf73eaa94fde23247434709061f6">hours_end</a></td></tr>
+<tr class="memdesc:a2653bf73eaa94fde23247434709061f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indica la hora de finalización de atención.  <br /></td></tr>
+<tr class="separator:a2653bf73eaa94fde23247434709061f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a842852f5af95fb592bf600b7f0638088" id="r_a842852f5af95fb592bf600b7f0638088"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a842852f5af95fb592bf600b7f0638088">minutes_end</a></td></tr>
+<tr class="memdesc:a842852f5af95fb592bf600b7f0638088"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indica los minutos de la hora de finalización de atención.  <br /></td></tr>
+<tr class="separator:a842852f5af95fb592bf600b7f0638088"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3dbfb6e1a8df68ad45feed1ba256ec4" id="r_ad3dbfb6e1a8df68ad45feed1ba256ec4"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad3dbfb6e1a8df68ad45feed1ba256ec4">day</a> [3]</td></tr>
+<tr class="memdesc:ad3dbfb6e1a8df68ad45feed1ba256ec4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indica el día actual en formato Sun, Mon, Tue, Wed, Thu, Fri, Sat según corresponda.  <br /></td></tr>
+<tr class="separator:ad3dbfb6e1a8df68ad45feed1ba256ec4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f448a2ad48bc2908a63d46c11f40684" id="r_a0f448a2ad48bc2908a63d46c11f40684"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0f448a2ad48bc2908a63d46c11f40684">temperature_max</a> = 0</td></tr>
+<tr class="separator:a0f448a2ad48bc2908a63d46c11f40684"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4de76f6485d55de573fb9f4d95b81a3" id="r_af4de76f6485d55de573fb9f4d95b81a3"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af4de76f6485d55de573fb9f4d95b81a3">temperature_min</a> = 1000</td></tr>
+<tr class="separator:af4de76f6485d55de573fb9f4d95b81a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa13d3909eb60361e2e9bddae43731f4d" id="r_aa13d3909eb60361e2e9bddae43731f4d"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa13d3909eb60361e2e9bddae43731f4d">temperature_prom</a> = 0</td></tr>
+<tr class="separator:aa13d3909eb60361e2e9bddae43731f4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8b2c46fb24eea468b30e3bb3fd6d72a" id="r_af8b2c46fb24eea468b30e3bb3fd6d72a"><td class="memItemLeft" align="right" valign="top">TaskHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af8b2c46fb24eea468b30e3bb3fd6d72a">MeasureTemperature_task_handle</a> = NULL</td></tr>
+<tr class="separator:af8b2c46fb24eea468b30e3bb3fd6d72a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0ba5535abd8b29c982feac5f4faf744" id="r_ac0ba5535abd8b29c982feac5f4faf744"><td class="memItemLeft" align="right" valign="top">TaskHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0ba5535abd8b29c982feac5f4faf744">DeviceControl_task_handle</a> = NULL</td></tr>
+<tr class="separator:ac0ba5535abd8b29c982feac5f4faf744"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e6e4182ab4a814b9e87c2718a49b2df" id="r_a8e6e4182ab4a814b9e87c2718a49b2df"><td class="memItemLeft" align="right" valign="top">TaskHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8e6e4182ab4a814b9e87c2718a49b2df">IRControl_task_handle</a> = NULL</td></tr>
+<tr class="separator:a8e6e4182ab4a814b9e87c2718a49b2df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a379bd91429f0f022c97db669954011b0" id="r_a379bd91429f0f022c97db669954011b0"><td class="memItemLeft" align="right" valign="top">TaskHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a379bd91429f0f022c97db669954011b0">ReadTime_task_handle</a> = NULL</td></tr>
+<tr class="separator:a379bd91429f0f022c97db669954011b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Documentación de «define»</h2>
+<a id="ae941d260d00394cd8fbc9fc2057ea111" name="ae941d260d00394cd8fbc9fc2057ea111"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae941d260d00394cd8fbc9fc2057ea111">&#9670;&#160;</a></span>CONFIG_AIR_PERIOD</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CONFIG_AIR_PERIOD&#160;&#160;&#160;120000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Periodo en milisegundos cada cuál se ejecutará la tarea <a class="el" href="#a75e4bcd20cbf18091b5f480f93789eff" title="Tarea encargada de, mediante un GPIO, indicarle al arduino nano si debe emitir la señal IR para encen...">IRControl()</a> </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00068">68</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00280">IRControl()</a>.</p>
+
+</div>
+</div>
+<a id="a2d717af3f3d77cf7bc7875d98f2ae414" name="a2d717af3f3d77cf7bc7875d98f2ae414"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d717af3f3d77cf7bc7875d98f2ae414">&#9670;&#160;</a></span>CONFIG_CONTROL_PERIOD</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CONFIG_CONTROL_PERIOD&#160;&#160;&#160;30000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Periodo en milisegundos cada cuál se ejecutará la tarea <a class="el" href="#aca4c29326f0ccdedb0da727baaf7bb16" title="Tarea encargada de encender/apagar la PC y la lámpara UV dependiendo de si hoy hay o no atención,...">DeviceControl()</a> </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00061">61</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00243">DeviceControl()</a>.</p>
+
+</div>
+</div>
+<a id="a9a265a2fa8b8a1442be25098dec84dac" name="a9a265a2fa8b8a1442be25098dec84dac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a265a2fa8b8a1442be25098dec84dac">&#9670;&#160;</a></span>CONFIG_MEASURE_PERIOD</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CONFIG_MEASURE_PERIOD&#160;&#160;&#160;10000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Periodo en milisegundos cada cuál se ejecutarán las tareas <a class="el" href="#a5f29c74be484769ba28c966c65466d27" title="Tarea encargada de sensar la temperatura actual y calcular la temperatura máxima, la temperatura míni...">MeasureTemperature()</a> y <a class="el" href="#a483cced19b61975f76957f5696425fe9" title="Tarea que lee el día y la hora y minutos actuales. Indica si nos encontramos en horario de atención o...">ReadTime()</a> </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00054">54</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00182">MeasureTemperature()</a> y <a class="el" href="proyecto__integrador_8c_source.html#l00301">ReadTime()</a>.</p>
+
+</div>
+</div>
+<a id="a99f808a4928b6f1e405cf5a32d40d906" name="a99f808a4928b6f1e405cf5a32d40d906"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99f808a4928b6f1e405cf5a32d40d906">&#9670;&#160;</a></span>GPIO_ARD</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define GPIO_ARD&#160;&#160;&#160;GPIO_20</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00072">72</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00440">app_main()</a> y <a class="el" href="proyecto__integrador_8c_source.html#l00280">IRControl()</a>.</p>
+
+</div>
+</div>
+<a id="a6f01a704f5cade906a48b24a0c7ed5d8" name="a6f01a704f5cade906a48b24a0c7ed5d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f01a704f5cade906a48b24a0c7ed5d8">&#9670;&#160;</a></span>GPIO_PC</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define GPIO_PC&#160;&#160;&#160;GPIO_22</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00070">70</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00440">app_main()</a> y <a class="el" href="proyecto__integrador_8c_source.html#l00243">DeviceControl()</a>.</p>
+
+</div>
+</div>
+<a id="a2d83761e75e02b526fefd2bd6664ce10" name="a2d83761e75e02b526fefd2bd6664ce10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d83761e75e02b526fefd2bd6664ce10">&#9670;&#160;</a></span>GPIO_SERVO</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define GPIO_SERVO&#160;&#160;&#160;GPIO_19</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00073">73</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+</div>
+</div>
+<a id="ac3c75a5013ca24bed70560793627d63c" name="ac3c75a5013ca24bed70560793627d63c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3c75a5013ca24bed70560793627d63c">&#9670;&#160;</a></span>GPIO_UV</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define GPIO_UV&#160;&#160;&#160;GPIO_21</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00071">71</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00440">app_main()</a> y <a class="el" href="proyecto__integrador_8c_source.html#l00243">DeviceControl()</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Documentación de funciones</h2>
+<a id="a630544a7f0a2cc40d8a7fefab7e2fe70" name="a630544a7f0a2cc40d8a7fefab7e2fe70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a630544a7f0a2cc40d8a7fefab7e2fe70">&#9670;&#160;</a></span>app_main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void app_main </td>
+          <td>(</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00440">440</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="proyecto__integrador_8c_source.html#l00243">DeviceControl()</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00171">DeviceControl_task_handle</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00072">GPIO_ARD</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00070">GPIO_PC</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00071">GPIO_UV</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00280">IRControl()</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00172">IRControl_task_handle</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00182">MeasureTemperature()</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00170">MeasureTemperature_task_handle</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00366">ReadApp()</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00301">ReadTime()</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00173">ReadTime_task_handle</a> y <a class="el" href="proyecto__integrador_8c_source.html#l00420">ReadUart()</a>.</p>
+
+</div>
+</div>
+<a id="aca4c29326f0ccdedb0da727baaf7bb16" name="aca4c29326f0ccdedb0da727baaf7bb16"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca4c29326f0ccdedb0da727baaf7bb16">&#9670;&#160;</a></span>DeviceControl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DeviceControl </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tarea encargada de encender/apagar la PC y la lámpara UV dependiendo de si hoy hay o no atención, y si nos encontramos en horario de atención o no. Se indica por la UART si los dispositivos se encuentran encedidos o apagados. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00243">243</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="proyecto__integrador_8c_source.html#l00061">CONFIG_CONTROL_PERIOD</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00070">GPIO_PC</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00071">GPIO_UV</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00115">now</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00094">PC</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00108">today</a> y <a class="el" href="proyecto__integrador_8c_source.html#l00087">UV</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00440">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="a75e4bcd20cbf18091b5f480f93789eff" name="a75e4bcd20cbf18091b5f480f93789eff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75e4bcd20cbf18091b5f480f93789eff">&#9670;&#160;</a></span>IRControl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void IRControl </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tarea encargada de, mediante un GPIO, indicarle al arduino nano si debe emitir la señal IR para encender o apagar el Aire Acondicionado. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00280">280</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="proyecto__integrador_8c_source.html#l00101">AIR</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00068">CONFIG_AIR_PERIOD</a> y <a class="el" href="proyecto__integrador_8c_source.html#l00072">GPIO_ARD</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00440">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="a5f29c74be484769ba28c966c65466d27" name="a5f29c74be484769ba28c966c65466d27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f29c74be484769ba28c966c65466d27">&#9670;&#160;</a></span>MeasureTemperature()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MeasureTemperature </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tarea encargada de sensar la temperatura actual y calcular la temperatura máxima, la temperatura mínima y la temperatura promedio. Envía todos los datos a través de la UART y a la aplicación bluetooth. Si la temperatura promedio es mayor a 23°C, habilita la variable de control que permite encender el Aire Acondicionado. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00182">182</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="proyecto__integrador_8c_source.html#l00101">AIR</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00054">CONFIG_MEASURE_PERIOD</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00080">temperature</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00167">temperature_max</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00168">temperature_min</a> y <a class="el" href="proyecto__integrador_8c_source.html#l00169">temperature_prom</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00440">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="ab6458ee3bb8b8a39eba7df8991d0fcfa" name="ab6458ee3bb8b8a39eba7df8991d0fcfa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6458ee3bb8b8a39eba7df8991d0fcfa">&#9670;&#160;</a></span>ReadApp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ReadApp </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *</td>          <td class="paramname"><span class="paramname"><em>data</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em>length</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tarea que se ejecuta al recibir datos a través de la aplicación bluetooth. Determina si hoy hay atención o no, dependiendo del día actual y los datos obtenidos. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>Datos enviados desde la aplicación </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00366">366</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="proyecto__integrador_8c_source.html#l00164">day</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00150">hours_end</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00136">hours_start</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00157">minutes_end</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00143">minutes_start</a> y <a class="el" href="proyecto__integrador_8c_source.html#l00108">today</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00440">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="a483cced19b61975f76957f5696425fe9" name="a483cced19b61975f76957f5696425fe9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a483cced19b61975f76957f5696425fe9">&#9670;&#160;</a></span>ReadTime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ReadTime </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tarea que lee el día y la hora y minutos actuales. Indica si nos encontramos en horario de atención o no, de acuerdo a los datos ingresados en la aplicación bluetooth. Envía a la aplicación bluetooth si el consultorio actualmente se encuentra disponible o desocupado. En caso de encontrarse ocupado, también envía la hora de finalización. En caso de encontrarse disponible, envía la hora de inicio y de finalización del próximo turno. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00301">301</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="proyecto__integrador_8c_source.html#l00054">CONFIG_MEASURE_PERIOD</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00164">day</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00122">hours</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00150">hours_end</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00136">hours_start</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00129">minutes</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00157">minutes_end</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00143">minutes_start</a> y <a class="el" href="proyecto__integrador_8c_source.html#l00115">now</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00440">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="abe5dc9fc072fc013a50a356019cbf39c" name="abe5dc9fc072fc013a50a356019cbf39c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe5dc9fc072fc013a50a356019cbf39c">&#9670;&#160;</a></span>ReadUart()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ReadUart </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tarea que se ejecuta al recibir caracteres a través de la UART. Se utiliza para corroborar funcionamiento de de los dispositivos. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00420">420</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="proyecto__integrador_8c_source.html#l00101">AIR</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00094">PC</a> y <a class="el" href="proyecto__integrador_8c_source.html#l00087">UV</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00440">app_main()</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Documentación de variables</h2>
+<a id="a244a83bedea6936b4e31cd272fc6ddd5" name="a244a83bedea6936b4e31cd272fc6ddd5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a244a83bedea6936b4e31cd272fc6ddd5">&#9670;&#160;</a></span>AIR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool AIR = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00101">101</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00280">IRControl()</a>, <a class="el" href="proyecto__integrador_8c_source.html#l00182">MeasureTemperature()</a> y <a class="el" href="proyecto__integrador_8c_source.html#l00420">ReadUart()</a>.</p>
+
+</div>
+</div>
+<a id="ad3dbfb6e1a8df68ad45feed1ba256ec4" name="ad3dbfb6e1a8df68ad45feed1ba256ec4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3dbfb6e1a8df68ad45feed1ba256ec4">&#9670;&#160;</a></span>day</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char day[3]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Indica el día actual en formato Sun, Mon, Tue, Wed, Thu, Fri, Sat según corresponda. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00164">164</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00366">ReadApp()</a> y <a class="el" href="proyecto__integrador_8c_source.html#l00301">ReadTime()</a>.</p>
+
+</div>
+</div>
+<a id="ac0ba5535abd8b29c982feac5f4faf744" name="ac0ba5535abd8b29c982feac5f4faf744"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0ba5535abd8b29c982feac5f4faf744">&#9670;&#160;</a></span>DeviceControl_task_handle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TaskHandle_t DeviceControl_task_handle = NULL</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00171">171</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00440">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="af23005df06fc3cd4264e5eee2dfa2f8c" name="af23005df06fc3cd4264e5eee2dfa2f8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af23005df06fc3cd4264e5eee2dfa2f8c">&#9670;&#160;</a></span>hours</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int hours</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Indica la hora actual. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00122">122</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00301">ReadTime()</a>.</p>
+
+</div>
+</div>
+<a id="a2653bf73eaa94fde23247434709061f6" name="a2653bf73eaa94fde23247434709061f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2653bf73eaa94fde23247434709061f6">&#9670;&#160;</a></span>hours_end</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int hours_end</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Indica la hora de finalización de atención. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00150">150</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00366">ReadApp()</a> y <a class="el" href="proyecto__integrador_8c_source.html#l00301">ReadTime()</a>.</p>
+
+</div>
+</div>
+<a id="a1fa3726035ab718609253eae0082461a" name="a1fa3726035ab718609253eae0082461a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fa3726035ab718609253eae0082461a">&#9670;&#160;</a></span>hours_start</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int hours_start</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Indica la hora de inicio de atención. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00136">136</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00366">ReadApp()</a> y <a class="el" href="proyecto__integrador_8c_source.html#l00301">ReadTime()</a>.</p>
+
+</div>
+</div>
+<a id="a8e6e4182ab4a814b9e87c2718a49b2df" name="a8e6e4182ab4a814b9e87c2718a49b2df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e6e4182ab4a814b9e87c2718a49b2df">&#9670;&#160;</a></span>IRControl_task_handle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TaskHandle_t IRControl_task_handle = NULL</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00172">172</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00440">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="af8b2c46fb24eea468b30e3bb3fd6d72a" name="af8b2c46fb24eea468b30e3bb3fd6d72a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8b2c46fb24eea468b30e3bb3fd6d72a">&#9670;&#160;</a></span>MeasureTemperature_task_handle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TaskHandle_t MeasureTemperature_task_handle = NULL</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00170">170</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00440">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="ab693b677bdc9ded12b06daf49778101c" name="ab693b677bdc9ded12b06daf49778101c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab693b677bdc9ded12b06daf49778101c">&#9670;&#160;</a></span>minutes</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int minutes</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Indica los minutos actuales de la hora actual. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00129">129</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00301">ReadTime()</a>.</p>
+
+</div>
+</div>
+<a id="a842852f5af95fb592bf600b7f0638088" name="a842852f5af95fb592bf600b7f0638088"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a842852f5af95fb592bf600b7f0638088">&#9670;&#160;</a></span>minutes_end</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int minutes_end</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Indica los minutos de la hora de finalización de atención. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00157">157</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00366">ReadApp()</a> y <a class="el" href="proyecto__integrador_8c_source.html#l00301">ReadTime()</a>.</p>
+
+</div>
+</div>
+<a id="a0252ac49f50936bc797372d5372d05a9" name="a0252ac49f50936bc797372d5372d05a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0252ac49f50936bc797372d5372d05a9">&#9670;&#160;</a></span>minutes_start</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int minutes_start</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Indica los minutos de la hora de inicio de atención. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00143">143</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00366">ReadApp()</a> y <a class="el" href="proyecto__integrador_8c_source.html#l00301">ReadTime()</a>.</p>
+
+</div>
+</div>
+<a id="a92853dc61ab5df433c749721bb895eb3" name="a92853dc61ab5df433c749721bb895eb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92853dc61ab5df433c749721bb895eb3">&#9670;&#160;</a></span>now</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool now = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Variable de control que indica si nos encontramos en horario de atención o no. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00115">115</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00243">DeviceControl()</a> y <a class="el" href="proyecto__integrador_8c_source.html#l00301">ReadTime()</a>.</p>
+
+</div>
+</div>
+<a id="a831811b81d1143c1dc1ba578c78b6cf3" name="a831811b81d1143c1dc1ba578c78b6cf3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a831811b81d1143c1dc1ba578c78b6cf3">&#9670;&#160;</a></span>PC</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool PC = true</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Variable de control para encender/apagar la PC. </p>
+<p>Variable de control para encender/apagar el Aire Acondicionado. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00094">94</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00243">DeviceControl()</a> y <a class="el" href="proyecto__integrador_8c_source.html#l00420">ReadUart()</a>.</p>
+
+</div>
+</div>
+<a id="a379bd91429f0f022c97db669954011b0" name="a379bd91429f0f022c97db669954011b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a379bd91429f0f022c97db669954011b0">&#9670;&#160;</a></span>ReadTime_task_handle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TaskHandle_t ReadTime_task_handle = NULL</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00173">173</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00440">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="a6bd95140398cc8f4b44157b17d6ba31e" name="a6bd95140398cc8f4b44157b17d6ba31e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bd95140398cc8f4b44157b17d6ba31e">&#9670;&#160;</a></span>temperature</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t temperature = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Variable global en la cual se almacenará la última temperatura sensada. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00080">80</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00182">MeasureTemperature()</a>.</p>
+
+</div>
+</div>
+<a id="a0f448a2ad48bc2908a63d46c11f40684" name="a0f448a2ad48bc2908a63d46c11f40684"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f448a2ad48bc2908a63d46c11f40684">&#9670;&#160;</a></span>temperature_max</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t temperature_max = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00167">167</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00182">MeasureTemperature()</a>.</p>
+
+</div>
+</div>
+<a id="af4de76f6485d55de573fb9f4d95b81a3" name="af4de76f6485d55de573fb9f4d95b81a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4de76f6485d55de573fb9f4d95b81a3">&#9670;&#160;</a></span>temperature_min</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t temperature_min = 1000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00168">168</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00182">MeasureTemperature()</a>.</p>
+
+</div>
+</div>
+<a id="aa13d3909eb60361e2e9bddae43731f4d" name="aa13d3909eb60361e2e9bddae43731f4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa13d3909eb60361e2e9bddae43731f4d">&#9670;&#160;</a></span>temperature_prom</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float temperature_prom = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00169">169</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00182">MeasureTemperature()</a>.</p>
+
+</div>
+</div>
+<a id="a9976072a934d623de95a10f1daf2d55d" name="a9976072a934d623de95a10f1daf2d55d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9976072a934d623de95a10f1daf2d55d">&#9670;&#160;</a></span>today</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool today = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Variable de control que indica si el día de hoy hay atención en el consultorio o no. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00108">108</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00243">DeviceControl()</a> y <a class="el" href="proyecto__integrador_8c_source.html#l00366">ReadApp()</a>.</p>
+
+</div>
+</div>
+<a id="aa90d06fbaa18929644a50f4d75c19099" name="aa90d06fbaa18929644a50f4d75c19099"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa90d06fbaa18929644a50f4d75c19099">&#9670;&#160;</a></span>UV</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool UV = true</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Variable de control para encender/apagar la lámpara UV. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__integrador_8c_source.html#l00087">87</a> del archivo <a class="el" href="proyecto__integrador_8c_source.html">proyecto_integrador.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__integrador_8c_source.html#l00243">DeviceControl()</a> y <a class="el" href="proyecto__integrador_8c_source.html#l00420">ReadUart()</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_d9edf6c004b4a7ff14fe9ae7a92214ee.html">firmware</a></li><li class="navelem"><a class="el" href="dir_429d80758da54da73083af4edd40d0b3.html">projects</a></li><li class="navelem"><a class="el" href="dir_4d4424f439ee5cabd21394bfc6e97a0b.html">proyecto_integrador</a></li><li class="navelem"><a class="el" href="dir_c68839fcd73cec7ec2d7949ab9e1a94b.html">main</a></li><li class="navelem"><a class="el" href="proyecto__integrador_8c.html">proyecto_integrador.c</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
+  </ul>
+</div>
+</body>
+</html>

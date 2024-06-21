@@ -36,7 +36,7 @@
 /**
  * @brief 
  * 
- * @param pin 
+ * @param canal 
  * @return true 
  * @return false 
  */

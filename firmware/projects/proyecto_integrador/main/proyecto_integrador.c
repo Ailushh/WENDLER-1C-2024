@@ -1,7 +1,15 @@
-/*! @mainpage Proyecto Integrador
+/*! @mainpage Proyecto Integrador - ConfortMed
  *
  * @section genDesc General Description
  *
+ * El presente programa corresponde a un prototipo de administración de consultorios de atención médica denominado "ConfortMed".
+ * El dispositivo se controla mediante una aplicación Bluetooth en la cual se seleccionan los días de atención correspondiente a dicho consultorio, con los correspondientes horarios.
+ * Al comenzar la jornada de atención, se enciende el PC del consultorio a través de un GPIO que activa un relé conectado al power switch de la misma. 
+ * Constantemente se sensa la temperatura del lugar utilizando un sensor de temperatura analógico LM35C. Si la temperatura promedio del mismo alcanza una temperatura mayor a 23°C, se enciende el aire acondicionado del lugar, a través de un GPIO 
+ * conectado a una Arduino Nano encargado de emitir señales infrarrojas que enciendan/apaguen el artefacto según corresponda.
+ * A través de la aplicación se pueden observar la temperatura actual sensada, la temperatura promedio y las temperaturas máximas y mínimas. A su vez se puede observar si actualmente el consultorio
+ * se encuentra ocupado y cuándo finaliza el turno. En caso de encontrarse el consultorio desocupado, informa cuando comienza y finaliza el próximo turno.
+ * Fuera de los horarios de atención, se enciende una lámpara UV encargada de desinfectar el lugar.
  *
  * @section hardConn Hardware Connection
  *
@@ -19,6 +27,7 @@
  * |:----------:|:--------------------------------------------------------------|
  * | 16/05/2024 | Creación del Documento                         				|
  * | 19/06/2024	| Finalización. Se comprueba correcto funcionamiento del mismo	|
+ * | 21/06/2024	| Documentación													|
  *
  * @author Wendler Tatiana Ailen (ailuwendler@gmail.com)
  *
@@ -35,32 +44,126 @@
 #include <analog_io_mcu.h>
 #include <ble_mcu.h>
 #include <time.h>
-#include <led.h>
-#include "servo_sg90.h"
-/*==================[macros and definitions]=================================*/
 
+/*==================[macros and definitions]=================================*/
+/**
+ * @def CONFIG_MEASURE_PERIOD
+ * @brief Periodo en milisegundos cada cuál se ejecutarán las tareas MeasureTemperature() y ReadTime()
+ * 
+ */
 #define CONFIG_MEASURE_PERIOD 10000
-#define CONFIG_CONTROL_PERIOD 10000
-#define CONFIG_AIR_PERIOD	120000
+
+/**
+ * @def CONFIG_CONTROL_PERIOD
+ * @brief Periodo en milisegundos cada cuál se ejecutará la tarea DeviceControl()
+ * 
+ */
+#define CONFIG_CONTROL_PERIOD 30000
+
+/**
+ * @def CONFIG_AIR_PERIOD
+ * @brief Periodo en milisegundos cada cuál se ejecutará la tarea IRControl()
+ * 
+ */
+#define CONFIG_AIR_PERIOD 120000
+
 #define GPIO_PC GPIO_22
 #define GPIO_UV GPIO_21
 #define GPIO_ARD GPIO_20
 #define GPIO_SERVO GPIO_19
 
 /*==================[internal data definition]===============================*/
-
+/**
+ * @var uint16_t temperature
+ * @brief Variable global en la cual se almacenará la última temperatura sensada
+ */
 uint16_t temperature = 0;
+
+/**
+ * @var bool UV
+ * @brief Variable de control para encender/apagar la lámpara UV
+ * 
+ */
 bool UV = true;
+
+/**
+ * @var bool PC
+ * @brief Variable de control para encender/apagar la PC
+ * 
+ */
 bool PC = true;
+
+/**
+ * @var bool PC
+ * @brief Variable de control para encender/apagar el Aire Acondicionado
+ * 
+ */
 bool AIR = false;
+
+/**
+ * @var bool today
+ * @brief Variable de control que indica si el día de hoy hay atención en el consultorio o no
+ * 
+ */
 bool today = false;
+
+/**
+ * @var bool now
+ * @brief Variable de control que indica si nos encontramos en horario de atención o no
+ * 
+ */
 bool now = false;
-int hours, minutes;
+
+/**
+ * @var int hours
+ * @brief Indica la hora actual
+ * 
+ */
+int hours;
+
+/**
+ * @var int minutes
+ * @brief Indica los minutos actuales de la hora actual.
+ * 
+ */
+int minutes;
+
+/**
+ * @var int hours_start
+ * @brief Indica la hora de inicio de atención.
+ * 
+ */
 int hours_start;
+
+/**
+ * @var int minutes_start
+ * @brief Indica los minutos de la hora de inicio de atención.
+ * 
+ */
 int minutes_start;
+
+/**
+ * @var int hours_end
+ * @brief Indica la hora de finalización de atención.
+ * 
+ */
 int hours_end;
+
+/**
+ * @var int minutes_end
+ * @brief Indica los minutos de la hora de finalización de atención.
+ * 
+ */
 int minutes_end;
+
+/**
+ * @var char day[3]
+ * @brief Indica el día actual en formato Sun, Mon, Tue, Wed, Thu, Fri, Sat según corresponda
+ * 
+ */
 char day[3];
+
+
 uint16_t temperature_max = 0;
 uint16_t temperature_min = 1000;
 float temperature_prom = 0;
@@ -71,8 +174,12 @@ TaskHandle_t ReadTime_task_handle = NULL;
 
 /*==================[internal functions declaration]=========================*/
 
-
-static void MeasureTemperature(){
+/**
+ * @brief Tarea encargada de sensar la temperatura actual y calcular la temperatura máxima, la temperatura mínima y la temperatura promedio.
+ * 		  Envía todos los datos a través de la UART y a la aplicación bluetooth. 
+ * 		  Si la temperatura promedio es mayor a 23°C, habilita la variable de control que permite encender el Aire Acondicionado.
+ */
+void MeasureTemperature(){
 	while (true){
 
 	temperature = lm35cMeasureTemperature();
@@ -129,7 +236,11 @@ static void MeasureTemperature(){
 	vTaskDelay(CONFIG_MEASURE_PERIOD / portTICK_PERIOD_MS);
 }}
 
-static void DeviceControl(){
+/**
+ * @brief Tarea encargada de encender/apagar la PC y la lámpara UV dependiendo de si hoy hay o no atención, y si nos encontramos
+ * 		  en horario de atención o no. Se indica por la UART si los dispositivos se encuentran encedidos o apagados.
+ */
+void DeviceControl(){
 	while (true){
 
 	if (now==false && today==true){
@@ -162,7 +273,11 @@ static void DeviceControl(){
 
 }}
 
-static void IRControl(){
+/**
+ * @brief Tarea encargada de, mediante un GPIO, indicarle al arduino nano si debe emitir la señal IR para encender
+ * 		  o apagar el Aire Acondicionado. 
+ */
+void IRControl(){
 	while (true){
 
 	if (AIR){
@@ -176,8 +291,14 @@ static void IRControl(){
 	vTaskDelay(CONFIG_AIR_PERIOD / portTICK_PERIOD_MS);
 }}
 
-
-static void ReadTime(){
+/**
+ * @brief Tarea que lee el día y la hora y minutos actuales. Indica si nos encontramos
+ * 		  en horario de atención o no, de acuerdo a los datos ingresados en la aplicación bluetooth.
+ * 		  Envía a la aplicación bluetooth si el consultorio actualmente se encuentra disponible o desocupado.
+ * 		  En caso de encontrarse ocupado, también envía la hora de finalización. En caso de encontrarse disponible, 
+ * 		  envía la hora de inicio y de finalización del próximo turno.
+ */
+void ReadTime(){
 	while (true){
 
 	char msg[50];	
@@ -194,23 +315,23 @@ static void ReadTime(){
     }
 
 
-	if (hours_start == hours && minutes_start == minutes){
+	if (hours_start <= hours && minutes_start <= minutes){
 
 		now = true;
 
 		sprintf(msg, "*G%u\n*", 1); //Barra disponibilidad
 		BleSendString(msg);
-		sprintf(msg, "*D%u\n*", 'Ocu'); //Mensaje disponibilidad. Consultorio Ocupado
+		sprintf(msg, "*D%d\n", 'Ocu'); //Mensaje disponibilidad. Consultorio Ocupado
 		BleSendString(msg);
 	}
 
-	if(hours_end == hours && minutes_end == minutes){
+	if(hours_end <= hours && minutes_end <= minutes){
 
 		now = false;
 
 		sprintf(msg, "*G%u\n*", 0); //Barra disponibilidad
 		BleSendString(msg);
-		sprintf(msg, "*D%u\n*", 'Dis'); //Mensaje disponibilidad. Consultorio Disponible
+		sprintf(msg, "*D%d\n", 'Dis'); //Mensaje disponibilidad. Consultorio Disponible
 		BleSendString(msg);
 	}
 
@@ -236,11 +357,17 @@ static void ReadTime(){
 	
 }}
 
+/**
+ * @brief Tarea que se ejecuta al recibir datos a través de la aplicación bluetooth. 
+ * 		  Determina si hoy hay atención o no, dependiendo del día actual y los datos obtenidos.
+ * 
+ * @param data Datos enviados desde la aplicación
+ */
 void ReadApp(uint8_t * data, uint8_t length){
 	
 	uint8_t i = 1;
 	
-	//Recibo los días de atención en formato Sun, Mon, Tue, Wed, Thu, Fri, Sat. Si coincide con el día actual, hoy habrá atención
+	//Recibo los días de atención en formato Sun, Mon, Tue, Wed, Thu, Fri, Sat. Si coincide con el día actual, significa que hoy habrá atención
 	if(data[0]==day[0] && data[1]==day[1]){
 		today=true;
 	}
@@ -286,6 +413,10 @@ void ReadApp(uint8_t * data, uint8_t length){
 	}
 }
 
+/**
+ * @brief Tarea que se ejecuta al recibir caracteres a través de la UART. Se utiliza para corroborar funcionamiento de
+ * 		  de los dispositivos.
+ */
 void ReadUart(){
 
 	uint8_t lectura; 
